@@ -13,113 +13,113 @@
   svg.prepend(defs);
 })();
 
-// ── Countries dataset ─────────────────────────────────────────────
+// ── Countries dataset (ISO 3166-1 alpha-2 codes for flagcdn.com) ───
 const COUNTRIES = [
   // Европа
-  {"name":"Россия","flag":"🇷🇺"},{"name":"Германия","flag":"🇩🇪"},
-  {"name":"Франция","flag":"🇫🇷"},{"name":"Италия","flag":"🇮🇹"},
-  {"name":"Испания","flag":"🇪🇸"},{"name":"Великобритания","flag":"🇬🇧"},
-  {"name":"Польша","flag":"🇵🇱"},{"name":"Нидерланды","flag":"🇳🇱"},
-  {"name":"Швеция","flag":"🇸🇪"},{"name":"Норвегия","flag":"🇳🇴"},
-  {"name":"Финляндия","flag":"🇫🇮"},{"name":"Швейцария","flag":"🇨🇭"},
-  {"name":"Австрия","flag":"🇦🇹"},{"name":"Бельгия","flag":"🇧🇪"},
-  {"name":"Португалия","flag":"🇵🇹"},{"name":"Греция","flag":"🇬🇷"},
-  {"name":"Румыния","flag":"🇷🇴"},{"name":"Венгрия","flag":"🇭🇺"},
-  {"name":"Чехия","flag":"🇨🇿"},{"name":"Дания","flag":"🇩🇰"},
-  {"name":"Украина","flag":"🇺🇦"},{"name":"Беларусь","flag":"🇧🇾"},
-  {"name":"Словакия","flag":"🇸🇰"},{"name":"Болгария","flag":"🇧🇬"},
-  {"name":"Сербия","flag":"🇷🇸"},{"name":"Хорватия","flag":"🇭🇷"},
-  {"name":"Босния и Герцеговина","flag":"🇧🇦"},{"name":"Словения","flag":"🇸🇮"},
-  {"name":"Литва","flag":"🇱🇹"},{"name":"Латвия","flag":"🇱🇻"},
-  {"name":"Эстония","flag":"🇪🇪"},{"name":"Молдова","flag":"🇲🇩"},
-  {"name":"Албания","flag":"🇦🇱"},{"name":"Северная Македония","flag":"🇲🇰"},
-  {"name":"Черногория","flag":"🇲🇪"},{"name":"Ирландия","flag":"🇮🇪"},
-  {"name":"Исландия","flag":"🇮🇸"},{"name":"Люксембург","flag":"🇱🇺"},
-  {"name":"Мальта","flag":"🇲🇹"},{"name":"Кипр","flag":"🇨🇾"},
-  {"name":"Лихтенштейн","flag":"🇱🇮"},{"name":"Монако","flag":"🇲🇨"},
-  {"name":"Андорра","flag":"🇦🇩"},{"name":"Сан-Марино","flag":"🇸🇲"},
-  {"name":"Ватикан","flag":"🇻🇦"},
+  {name:"Россия",code:"ru"},{name:"Германия",code:"de"},
+  {name:"Франция",code:"fr"},{name:"Италия",code:"it"},
+  {name:"Испания",code:"es"},{name:"Великобритания",code:"gb"},
+  {name:"Польша",code:"pl"},{name:"Нидерланды",code:"nl"},
+  {name:"Швеция",code:"se"},{name:"Норвегия",code:"no"},
+  {name:"Финляндия",code:"fi"},{name:"Швейцария",code:"ch"},
+  {name:"Австрия",code:"at"},{name:"Бельгия",code:"be"},
+  {name:"Португалия",code:"pt"},{name:"Греция",code:"gr"},
+  {name:"Румыния",code:"ro"},{name:"Венгрия",code:"hu"},
+  {name:"Чехия",code:"cz"},{name:"Дания",code:"dk"},
+  {name:"Украина",code:"ua"},{name:"Беларусь",code:"by"},
+  {name:"Словакия",code:"sk"},{name:"Болгария",code:"bg"},
+  {name:"Сербия",code:"rs"},{name:"Хорватия",code:"hr"},
+  {name:"Босния и Герцеговина",code:"ba"},{name:"Словения",code:"si"},
+  {name:"Литва",code:"lt"},{name:"Латвия",code:"lv"},
+  {name:"Эстония",code:"ee"},{name:"Молдова",code:"md"},
+  {name:"Албания",code:"al"},{name:"Северная Македония",code:"mk"},
+  {name:"Черногория",code:"me"},{name:"Ирландия",code:"ie"},
+  {name:"Исландия",code:"is"},{name:"Люксембург",code:"lu"},
+  {name:"Мальта",code:"mt"},{name:"Кипр",code:"cy"},
+  {name:"Лихтенштейн",code:"li"},{name:"Монако",code:"mc"},
+  {name:"Андорра",code:"ad"},{name:"Сан-Марино",code:"sm"},
+  {name:"Ватикан",code:"va"},
   // Азия
-  {"name":"Китай","flag":"🇨🇳"},{"name":"Япония","flag":"🇯🇵"},
-  {"name":"Индия","flag":"🇮🇳"},{"name":"Южная Корея","flag":"🇰🇷"},
-  {"name":"Индонезия","flag":"🇮🇩"},{"name":"Таиланд","flag":"🇹🇭"},
-  {"name":"Вьетнам","flag":"🇻🇳"},{"name":"Филиппины","flag":"🇵🇭"},
-  {"name":"Малайзия","flag":"🇲🇾"},{"name":"Сингапур","flag":"🇸🇬"},
-  {"name":"Казахстан","flag":"🇰🇿"},{"name":"Саудовская Аравия","flag":"🇸🇦"},
-  {"name":"ОАЭ","flag":"🇦🇪"},{"name":"Иран","flag":"🇮🇷"},
-  {"name":"Ирак","flag":"🇮🇶"},{"name":"Пакистан","flag":"🇵🇰"},
-  {"name":"Бангладеш","flag":"🇧🇩"},{"name":"Израиль","flag":"🇮🇱"},
-  {"name":"Иордания","flag":"🇯🇴"},{"name":"Сирия","flag":"🇸🇾"},
-  {"name":"Турция","flag":"🇹🇷"},{"name":"Афганистан","flag":"🇦🇫"},
-  {"name":"Мьянма","flag":"🇲🇲"},{"name":"Камбоджа","flag":"🇰🇭"},
-  {"name":"Лаос","flag":"🇱🇦"},{"name":"Монголия","flag":"🇲🇳"},
-  {"name":"Северная Корея","flag":"🇰🇵"},{"name":"Непал","flag":"🇳🇵"},
-  {"name":"Шри-Ланка","flag":"🇱🇰"},{"name":"Мальдивы","flag":"🇲🇻"},
-  {"name":"Бутан","flag":"🇧🇹"},{"name":"Узбекистан","flag":"🇺🇿"},
-  {"name":"Туркменистан","flag":"🇹🇲"},{"name":"Таджикистан","flag":"🇹🇯"},
-  {"name":"Кыргызстан","flag":"🇰🇬"},{"name":"Азербайджан","flag":"🇦🇿"},
-  {"name":"Армения","flag":"🇦🇲"},{"name":"Грузия","flag":"🇬🇪"},
-  {"name":"Ливан","flag":"🇱🇧"},{"name":"Кувейт","flag":"🇰🇼"},
-  {"name":"Катар","flag":"🇶🇦"},{"name":"Бахрейн","flag":"🇧🇭"},
-  {"name":"Оман","flag":"🇴🇲"},{"name":"Йемен","flag":"🇾🇪"},
-  {"name":"Бруней","flag":"🇧🇳"},{"name":"Восточный Тимор","flag":"🇹🇱"},
-  {"name":"Палестина","flag":"🇵🇸"},
+  {name:"Китай",code:"cn"},{name:"Япония",code:"jp"},
+  {name:"Индия",code:"in"},{name:"Южная Корея",code:"kr"},
+  {name:"Индонезия",code:"id"},{name:"Таиланд",code:"th"},
+  {name:"Вьетнам",code:"vn"},{name:"Филиппины",code:"ph"},
+  {name:"Малайзия",code:"my"},{name:"Сингапур",code:"sg"},
+  {name:"Казахстан",code:"kz"},{name:"Саудовская Аравия",code:"sa"},
+  {name:"ОАЭ",code:"ae"},{name:"Иран",code:"ir"},
+  {name:"Ирак",code:"iq"},{name:"Пакистан",code:"pk"},
+  {name:"Бангладеш",code:"bd"},{name:"Израиль",code:"il"},
+  {name:"Иордания",code:"jo"},{name:"Сирия",code:"sy"},
+  {name:"Турция",code:"tr"},{name:"Афганистан",code:"af"},
+  {name:"Мьянма",code:"mm"},{name:"Камбоджа",code:"kh"},
+  {name:"Лаос",code:"la"},{name:"Монголия",code:"mn"},
+  {name:"Северная Корея",code:"kp"},{name:"Непал",code:"np"},
+  {name:"Шри-Ланка",code:"lk"},{name:"Мальдивы",code:"mv"},
+  {name:"Бутан",code:"bt"},{name:"Узбекистан",code:"uz"},
+  {name:"Туркменистан",code:"tm"},{name:"Таджикистан",code:"tj"},
+  {name:"Кыргызстан",code:"kg"},{name:"Азербайджан",code:"az"},
+  {name:"Армения",code:"am"},{name:"Грузия",code:"ge"},
+  {name:"Ливан",code:"lb"},{name:"Кувейт",code:"kw"},
+  {name:"Катар",code:"qa"},{name:"Бахрейн",code:"bh"},
+  {name:"Оман",code:"om"},{name:"Йемен",code:"ye"},
+  {name:"Бруней",code:"bn"},{name:"Восточный Тимор",code:"tl"},
+  {name:"Палестина",code:"ps"},
   // Африка
-  {"name":"Египет","flag":"🇪🇬"},{"name":"ЮАР","flag":"🇿🇦"},
-  {"name":"Нигерия","flag":"🇳🇬"},{"name":"Кения","flag":"🇰🇪"},
-  {"name":"Марокко","flag":"🇲🇦"},{"name":"Эфиопия","flag":"🇪🇹"},
-  {"name":"Танзания","flag":"🇹🇿"},{"name":"Гана","flag":"🇬🇭"},
-  {"name":"Алжир","flag":"🇩🇿"},{"name":"Тунис","flag":"🇹🇳"},
-  {"name":"Ливия","flag":"🇱🇾"},{"name":"Судан","flag":"🇸🇩"},
-  {"name":"Южный Судан","flag":"🇸🇸"},{"name":"Конго","flag":"🇨🇬"},
-  {"name":"ДР Конго","flag":"🇨🇩"},{"name":"Ангола","flag":"🇦🇴"},
-  {"name":"Мозамбик","flag":"🇲🇿"},{"name":"Замбия","flag":"🇿🇲"},
-  {"name":"Зимбабве","flag":"🇿🇼"},{"name":"Уганда","flag":"🇺🇬"},
-  {"name":"Руанда","flag":"🇷🇼"},{"name":"Бурунди","flag":"🇧🇮"},
-  {"name":"Камерун","flag":"🇨🇲"},{"name":"Кот-д'Ивуар","flag":"🇨🇮"},
-  {"name":"Сенегал","flag":"🇸🇳"},{"name":"Мали","flag":"🇲🇱"},
-  {"name":"Буркина-Фасо","flag":"🇧🇫"},{"name":"Нигер","flag":"🇳🇪"},
-  {"name":"Чад","flag":"🇹🇩"},{"name":"Мавритания","flag":"🇲🇷"},
-  {"name":"Гвинея","flag":"🇬🇳"},{"name":"Бенин","flag":"🇧🇯"},
-  {"name":"Того","flag":"🇹🇬"},{"name":"Сьерра-Леоне","flag":"🇸🇱"},
-  {"name":"Либерия","flag":"🇱🇷"},{"name":"Гамбия","flag":"🇬🇲"},
-  {"name":"Гвинея-Бисау","flag":"🇬🇼"},{"name":"Кабо-Верде","flag":"🇨🇻"},
-  {"name":"Сомали","flag":"🇸🇴"},{"name":"Джибути","flag":"🇩🇯"},
-  {"name":"Эритрея","flag":"🇪🇷"},{"name":"Экваториальная Гвинея","flag":"🇬🇶"},
-  {"name":"Габон","flag":"🇬🇦"},{"name":"ЦАР","flag":"🇨🇫"},
-  {"name":"Намибия","flag":"🇳🇦"},{"name":"Ботсвана","flag":"🇧🇼"},
-  {"name":"Лесото","flag":"🇱🇸"},{"name":"Эсватини","flag":"🇸🇿"},
-  {"name":"Малави","flag":"🇲🇼"},{"name":"Мадагаскар","flag":"🇲🇬"},
-  {"name":"Маврикий","flag":"🇲🇺"},{"name":"Сейшелы","flag":"🇸🇨"},
-  {"name":"Коморы","flag":"🇰🇲"},{"name":"Сан-Томе и Принсипи","flag":"🇸🇹"},
+  {name:"Египет",code:"eg"},{name:"ЮАР",code:"za"},
+  {name:"Нигерия",code:"ng"},{name:"Кения",code:"ke"},
+  {name:"Марокко",code:"ma"},{name:"Эфиопия",code:"et"},
+  {name:"Танзания",code:"tz"},{name:"Гана",code:"gh"},
+  {name:"Алжир",code:"dz"},{name:"Тунис",code:"tn"},
+  {name:"Ливия",code:"ly"},{name:"Судан",code:"sd"},
+  {name:"Южный Судан",code:"ss"},{name:"Конго",code:"cg"},
+  {name:"ДР Конго",code:"cd"},{name:"Ангола",code:"ao"},
+  {name:"Мозамбик",code:"mz"},{name:"Замбия",code:"zm"},
+  {name:"Зимбабве",code:"zw"},{name:"Уганда",code:"ug"},
+  {name:"Руанда",code:"rw"},{name:"Бурунди",code:"bi"},
+  {name:"Камерун",code:"cm"},{name:"Кот-д'Ивуар",code:"ci"},
+  {name:"Сенегал",code:"sn"},{name:"Мали",code:"ml"},
+  {name:"Буркина-Фасо",code:"bf"},{name:"Нигер",code:"ne"},
+  {name:"Чад",code:"td"},{name:"Мавритания",code:"mr"},
+  {name:"Гвинея",code:"gn"},{name:"Бенин",code:"bj"},
+  {name:"Того",code:"tg"},{name:"Сьерра-Леоне",code:"sl"},
+  {name:"Либерия",code:"lr"},{name:"Гамбия",code:"gm"},
+  {name:"Гвинея-Бисау",code:"gw"},{name:"Кабо-Верде",code:"cv"},
+  {name:"Сомали",code:"so"},{name:"Джибути",code:"dj"},
+  {name:"Эритрея",code:"er"},{name:"Экваториальная Гвинея",code:"gq"},
+  {name:"Габон",code:"ga"},{name:"ЦАР",code:"cf"},
+  {name:"Намибия",code:"na"},{name:"Ботсвана",code:"bw"},
+  {name:"Лесото",code:"ls"},{name:"Эсватини",code:"sz"},
+  {name:"Малави",code:"mw"},{name:"Мадагаскар",code:"mg"},
+  {name:"Маврикий",code:"mu"},{name:"Сейшелы",code:"sc"},
+  {name:"Коморы",code:"km"},{name:"Сан-Томе и Принсипи",code:"st"},
   // Северная и Центральная Америка
-  {"name":"США","flag":"🇺🇸"},{"name":"Канада","flag":"🇨🇦"},
-  {"name":"Мексика","flag":"🇲🇽"},{"name":"Куба","flag":"🇨🇺"},
-  {"name":"Гаити","flag":"🇭🇹"},{"name":"Доминиканская Республика","flag":"🇩🇴"},
-  {"name":"Ямайка","flag":"🇯🇲"},{"name":"Тринидад и Тобаго","flag":"🇹🇹"},
-  {"name":"Панама","flag":"🇵🇦"},{"name":"Коста-Рика","flag":"🇨🇷"},
-  {"name":"Никарагуа","flag":"🇳🇮"},{"name":"Гондурас","flag":"🇭🇳"},
-  {"name":"Сальвадор","flag":"🇸🇻"},{"name":"Гватемала","flag":"🇬🇹"},
-  {"name":"Белиз","flag":"🇧🇿"},{"name":"Багамы","flag":"🇧🇸"},
-  {"name":"Барбадос","flag":"🇧🇧"},{"name":"Сент-Люсия","flag":"🇱🇨"},
-  {"name":"Гренада","flag":"🇬🇩"},{"name":"Антигуа и Барбуда","flag":"🇦🇬"},
-  {"name":"Доминика","flag":"🇩🇲"},{"name":"Сент-Китс и Невис","flag":"🇰🇳"},
-  {"name":"Сент-Винсент и Гренадины","flag":"🇻🇨"},
+  {name:"США",code:"us"},{name:"Канада",code:"ca"},
+  {name:"Мексика",code:"mx"},{name:"Куба",code:"cu"},
+  {name:"Гаити",code:"ht"},{name:"Доминиканская Республика",code:"do"},
+  {name:"Ямайка",code:"jm"},{name:"Тринидад и Тобаго",code:"tt"},
+  {name:"Панама",code:"pa"},{name:"Коста-Рика",code:"cr"},
+  {name:"Никарагуа",code:"ni"},{name:"Гондурас",code:"hn"},
+  {name:"Сальвадор",code:"sv"},{name:"Гватемала",code:"gt"},
+  {name:"Белиз",code:"bz"},{name:"Багамы",code:"bs"},
+  {name:"Барбадос",code:"bb"},{name:"Сент-Люсия",code:"lc"},
+  {name:"Гренада",code:"gd"},{name:"Антигуа и Барбуда",code:"ag"},
+  {name:"Доминика",code:"dm"},{name:"Сент-Китс и Невис",code:"kn"},
+  {name:"Сент-Винсент и Гренадины",code:"vc"},
   // Южная Америка
-  {"name":"Бразилия","flag":"🇧🇷"},{"name":"Аргентина","flag":"🇦🇷"},
-  {"name":"Колумбия","flag":"🇨🇴"},{"name":"Перу","flag":"🇵🇪"},
-  {"name":"Чили","flag":"🇨🇱"},{"name":"Венесуэла","flag":"🇻🇪"},
-  {"name":"Боливия","flag":"🇧🇴"},{"name":"Парагвай","flag":"🇵🇾"},
-  {"name":"Уругвай","flag":"🇺🇾"},{"name":"Эквадор","flag":"🇪🇨"},
-  {"name":"Гайана","flag":"🇬🇾"},{"name":"Суринам","flag":"🇸🇷"},
+  {name:"Бразилия",code:"br"},{name:"Аргентина",code:"ar"},
+  {name:"Колумбия",code:"co"},{name:"Перу",code:"pe"},
+  {name:"Чили",code:"cl"},{name:"Венесуэла",code:"ve"},
+  {name:"Боливия",code:"bo"},{name:"Парагвай",code:"py"},
+  {name:"Уругвай",code:"uy"},{name:"Эквадор",code:"ec"},
+  {name:"Гайана",code:"gy"},{name:"Суринам",code:"sr"},
   // Океания
-  {"name":"Австралия","flag":"🇦🇺"},{"name":"Новая Зеландия","flag":"🇳🇿"},
-  {"name":"Папуа — Новая Гвинея","flag":"🇵🇬"},{"name":"Фиджи","flag":"🇫🇯"},
-  {"name":"Соломоновы Острова","flag":"🇸🇧"},{"name":"Вануату","flag":"🇻🇺"},
-  {"name":"Самоа","flag":"🇼🇸"},{"name":"Кирибати","flag":"🇰🇮"},
-  {"name":"Тонга","flag":"🇹🇴"},{"name":"Микронезия","flag":"🇫🇲"},
-  {"name":"Палау","flag":"🇵🇼"},{"name":"Маршалловы Острова","flag":"🇲🇭"},
-  {"name":"Науру","flag":"🇳🇷"},{"name":"Тувалу","flag":"🇹🇻"},
+  {name:"Австралия",code:"au"},{name:"Новая Зеландия",code:"nz"},
+  {name:"Папуа — Новая Гвинея",code:"pg"},{name:"Фиджи",code:"fj"},
+  {name:"Соломоновы Острова",code:"sb"},{name:"Вануату",code:"vu"},
+  {name:"Самоа",code:"ws"},{name:"Кирибати",code:"ki"},
+  {name:"Тонга",code:"to"},{name:"Микронезия",code:"fm"},
+  {name:"Палау",code:"pw"},{name:"Маршалловы Острова",code:"mh"},
+  {name:"Науру",code:"nr"},{name:"Тувалу",code:"tv"},
 ];
 
 // ── Helpers ───────────────────────────────────────────────────────
@@ -148,7 +148,7 @@ const screens = {
   result: document.getElementById('result-screen'),
 };
 
-const flagEmoji  = document.getElementById('flag-emoji');
+const flagImg    = document.getElementById('flag-img');
 const flagStage  = document.getElementById('flag-stage');
 const optBtns    = [...document.querySelectorAll('.opt-btn')];
 const feedback   = document.getElementById('feedback');
@@ -210,10 +210,10 @@ function startTimer() {
 // ── Question generation ───────────────────────────────────────────
 function nextQuestion() {
   if (queue.length === 0) queue = shuffle(COUNTRIES);
-  const correct_country = queue.pop();
-  const others = shuffle(COUNTRIES.filter(c => c.name !== correct_country.name)).slice(0, 3);
-  const options = shuffle([...others, correct_country]);
-  return { flag: correct_country.flag, correct: correct_country.name, options: options.map(c => c.name) };
+  const country = queue.pop();
+  const others  = shuffle(COUNTRIES.filter(c => c.name !== country.name)).slice(0, 3);
+  const options = shuffle([...others, country]);
+  return { code: country.code, correct: country.name, options: options.map(c => c.name) };
 }
 
 // ── Load question ─────────────────────────────────────────────────
@@ -228,7 +228,10 @@ async function loadQuestion() {
 
   currentQuestion = nextQuestion();
 
-  flagEmoji.textContent = currentQuestion.flag;
+  // Используем flagcdn.com — настоящие PNG-флаги вместо emoji
+  flagImg.src = `https://flagcdn.com/w320/${currentQuestion.code}.png`;
+  flagImg.alt = currentQuestion.correct;
+
   currentQuestion.options.forEach((opt, i) => {
     optBtns[i].querySelector('.opt-text').textContent = opt;
   });
@@ -237,7 +240,7 @@ async function loadQuestion() {
 }
 
 // ── Answer handling ───────────────────────────────────────────────
-async function handleAnswer(idx) {
+function handleAnswer(idx) {
   if (answered || !currentQuestion) return;
   answered = true;
 
@@ -263,7 +266,7 @@ async function handleAnswer(idx) {
     feedback.className   = 'feedback wrong-fb';
   }
 
-  await sleep(900);
+  // Минимальная задержка — только анимация флипа (200мс)
   loadQuestion();
 }
 
@@ -287,7 +290,6 @@ function endGame() {
   const trophy = document.getElementById('result-trophy');
   trophy.textContent = pct >= 80 ? '🏆' : pct >= 50 ? '🥈' : '🌍';
 
-  // Save result to localStorage and generate shareable link
   const rid = randId();
   const now = new Date().toISOString().slice(0, 16).replace('T', ' ');
   const resultData = { correct, wrong, total, created_at: now };
@@ -295,7 +297,6 @@ function endGame() {
     localStorage.setItem('flags_result_' + rid, JSON.stringify(resultData));
   } catch (e) { /* localStorage might be unavailable */ }
 
-  // Build share URL: result.html#<rid>
   const base = location.href.replace(/\/[^/]*$/, '/');
   shareUrl.value = base + 'result.html#' + rid;
 }
