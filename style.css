@@ -184,12 +184,15 @@ html, body {
   position: relative; overflow: hidden;
   box-shadow: 0 8px 40px rgba(0,0,0,.5);
 }
-.flag-emoji {
-  font-size: 7rem; line-height: 1;
+.flag-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: calc(var(--r-lg) - 1px);
   transition: transform .18s ease, opacity .18s ease;
   user-select: none;
+  display: block;
 }
-.flag-stage.flip .flag-emoji { transform: scale(.1); opacity: 0; }
+.flag-stage.flip .flag-img { transform: scale(.1); opacity: 0; }
 .flag-shine {
   position: absolute; inset: 0;
   background: linear-gradient(135deg, rgba(255,255,255,.06) 0%, transparent 50%);
@@ -346,7 +349,6 @@ html, body {
 @media (max-width: 400px) {
   .hero-title { font-size: 2rem; }
   .flag-stage { width: 180px; height: 130px; }
-  .flag-emoji { font-size: 5.5rem; }
   .options-grid { grid-template-columns: 1fr; }
 }
 
