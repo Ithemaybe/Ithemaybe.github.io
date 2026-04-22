@@ -132,13 +132,6 @@ function shuffle(arr) {
   return a;
 }
 
-function randId(n = 10) {
-  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-  let id = '';
-  for (let i = 0; i < n; i++) id += chars[Math.floor(Math.random() * chars.length)];
-  return id;
-}
-
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 // ── DOM refs ──────────────────────────────────────────────────────
@@ -209,7 +202,8 @@ function startTimer() {
 
 // ── Question generation ───────────────────────────────────────────
 function nextQuestion() {
-  if (queue.length === 0) queue = shuffle(COUNTRIES);
+  // Возвращает null когда все страны показаны — игра завершается
+  if (queue.length === 0) return null;
   const country = queue.pop();
   const others  = shuffle(COUNTRIES.filter(c => c.name !== country.name)).slice(0, 3);
   const options = shuffle([...others, country]);
@@ -226,9 +220,17 @@ async function loadQuestion() {
   flagStage.classList.add('flip');
   await sleep(200);
 
-  currentQuestion = nextQuestion();
+  const q = nextQuestion();
 
-  // Используем flagcdn.com — настоящие PNG-флаги вместо emoji
+  // Все страны пройдены — заканчиваем игру
+  if (!q) {
+    flagStage.classList.remove('flip');
+    endGame(true);
+    return;
+  }
+
+  currentQuestion = q;
+
   flagImg.src = `https://flagcdn.com/w320/${currentQuestion.code}.png`;
   flagImg.alt = currentQuestion.correct;
 
@@ -266,12 +268,12 @@ function handleAnswer(idx) {
     feedback.className   = 'feedback wrong-fb';
   }
 
-  // Минимальная задержка — только анимация флипа (200мс)
-  loadQuestion();
+  // Не грузим следующий вопрос если таймер уже остановил игру
+  if (timeLeft > 0) loadQuestion();
 }
 
 // ── End game ──────────────────────────────────────────────────────
-function endGame() {
+function endGame(allDone = false) {
   clearInterval(timerInterval);
   show('result');
 
@@ -290,15 +292,20 @@ function endGame() {
   const trophy = document.getElementById('result-trophy');
   trophy.textContent = pct >= 80 ? '🏆' : pct >= 50 ? '🥈' : '🌍';
 
-  const rid = randId();
-  const now = new Date().toISOString().slice(0, 16).replace('T', ' ');
-  const resultData = { correct, wrong, total, created_at: now };
-  try {
-    localStorage.setItem('flags_result_' + rid, JSON.stringify(resultData));
-  } catch (e) { /* localStorage might be unavailable */ }
+  // Если прошли все страны — показываем особый заголовок
+  const resultTitle = document.querySelector('.result-title');
+  if (resultTitle) {
+    resultTitle.textContent = allDone
+      ? '🎉 Все страны пройдены!'
+      : 'Игра окончена!';
+  }
 
+  // ── Шаринг через URL-параметры (работает между устройствами) ──
+  // Формат: result.html#c=12&w=3&t=15&d=2026-04-22+20:03
+  const now = new Date().toISOString().slice(0, 16).replace('T', '+');
+  const hash = `c=${correct}&w=${wrong}&t=${total}&d=${encodeURIComponent(now)}`;
   const base = location.href.replace(/\/[^/]*$/, '/');
-  shareUrl.value = base + 'result.html#' + rid;
+  shareUrl.value = base + 'result.html#' + hash;
 }
 
 // ── Copy button ───────────────────────────────────────────────────
