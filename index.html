@@ -4,21 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Флаги Мира — Угадай Страну</title>
-
-<!-- Open Graph — красивое превью в Telegram, VK, Discord, WhatsApp -->
-<meta property="og:type"        content="website">
-<meta property="og:url"         content="https://ithemaybe.github.io/">
-<meta property="og:title"       content="Флаги Мира 🌍 — Угадай Страну">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ithemaybe.github.io/">
+<meta property="og:title" content="Флаги Мира 🌍 — Угадай Страну">
 <meta property="og:description" content="60 секунд — сколько флагов угадаешь? 190+ стран мира. Сыграй и кинь вызов другу!">
-<meta property="og:image"       content="https://flagcdn.com/w640/un.png">
-<meta property="og:locale"      content="ru_RU">
-
-<!-- Twitter / X Card -->
-<meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:title"       content="Флаги Мира 🌍 — Угадай Страну">
+<meta property="og:image" content="https://flagcdn.com/w640/un.png">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Флаги Мира 🌍 — Угадай Страну">
 <meta name="twitter:description" content="60 секунд — сколько флагов угадаешь? 190+ стран мира.">
-<meta name="twitter:image"       content="https://flagcdn.com/w640/un.png">
-
+<meta name="twitter:image" content="https://flagcdn.com/w640/un.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -42,7 +37,7 @@
     <h1 class="hero-title">Флаги<br><span>Мира</span></h1>
     <p class="hero-sub">Угадай страну по флагу.<br>60 секунд — сколько успеешь?</p>
     <button class="btn-start" id="btn-start">Начать игру</button>
-    <div class="hero-hint">← →  кнопки 1–4 для ответа</div>
+    <div class="hero-hint">← → кнопки 1–4 для ответа</div>
   </div>
 
   <!-- GAME SCREEN -->
@@ -56,7 +51,7 @@
         <svg viewBox="0 0 120 120">
           <circle class="ring-bg" cx="60" cy="60" r="50"/>
           <circle class="ring-fill" id="ring-fill" cx="60" cy="60" r="50"
-                  stroke-dasharray="314" stroke-dashoffset="0"/>
+            stroke-dasharray="314" stroke-dashoffset="0"/>
         </svg>
         <span id="timer-text">60</span>
       </div>
@@ -85,6 +80,12 @@
   <div id="result-screen" class="screen">
     <div class="result-trophy" id="result-trophy">🏆</div>
     <h2 class="result-title">Игра окончена!</h2>
+
+    <!-- Баннер нового рекорда -->
+    <div class="new-record-banner" id="new-record-banner" style="display:none">
+      🎉 Новый личный рекорд!
+    </div>
+
     <div class="result-stats">
       <div class="rs-box rs-correct">
         <div class="rs-num" id="res-correct">0</div>
@@ -107,16 +108,18 @@
       <div class="pct-text" id="pct-text">0% правильных</div>
     </div>
 
+    <!-- Кнопка поделиться (текстом, без URL с параметрами) -->
     <div class="share-box">
-      <span class="share-label">Ссылка на результат:</span>
-      <div class="share-row">
-        <input class="share-input" id="share-url" readonly>
-        <button class="copy-btn" id="copy-btn" title="Скопировать">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-          </svg>
-        </button>
-      </div>
+      <span class="share-label">Поделиться результатом:</span>
+      <button class="share-text-btn" id="share-text-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+          <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+        </svg>
+        Скопировать результат
+      </button>
+      <div class="share-copied-hint" id="share-copied-hint"></div>
     </div>
 
     <button class="btn-start" id="btn-again">Играть снова</button>
@@ -126,5 +129,56 @@
 
 <script src="game.js"></script>
 <script src="swimming-cat.js"></script>
+
+<!-- Рекорды и шэринг через localStorage -->
+<script>
+(function () {
+  const RECORD_KEY = 'v1_record';
+
+  /* ── Сохранить результат и проверить рекорд ── */
+  window.saveV1Result = function (correct, wrong, total) {
+    const pct     = total > 0 ? Math.round(correct / total * 100) : 0;
+    const date    = new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
+    const saved   = JSON.parse(localStorage.getItem(RECORD_KEY) || 'null');
+    const isNew   = !saved || correct > saved.correct;
+
+    // Всегда сохраняем последний результат
+    localStorage.setItem('v1_last', JSON.stringify({ correct, wrong, total, pct, date }));
+
+    // Обновляем рекорд если побит
+    if (isNew) {
+      localStorage.setItem(RECORD_KEY, JSON.stringify({ correct, wrong, total, pct, date }));
+    }
+
+    // Баннер нового рекорда
+    const banner = document.getElementById('new-record-banner');
+    if (banner) banner.style.display = isNew ? 'flex' : 'none';
+  };
+
+  /* ── Кнопка «Скопировать результат» ── */
+  document.getElementById('share-text-btn')?.addEventListener('click', () => {
+    const correct = document.getElementById('res-correct')?.textContent || '0';
+    const wrong   = document.getElementById('res-wrong')?.textContent   || '0';
+    const total   = document.getElementById('res-total')?.textContent   || '0';
+    const pct     = document.getElementById('pct-text')?.textContent    || '';
+
+    const text =
+      `🌍 Флаги Мира — результат игры\n` +
+      `✅ Угадано: ${correct} из ${total}\n` +
+      `❌ Ошибок: ${wrong}\n` +
+      `📊 Точность: ${pct}\n` +
+      `👉 Сыграй сам: https://ithemaybe.github.io/game/`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const hint = document.getElementById('share-copied-hint');
+      if (hint) {
+        hint.textContent = '✓ Скопировано!';
+        setTimeout(() => { hint.textContent = ''; }, 2000);
+      }
+    });
+  });
+})();
+</script>
+
 </body>
 </html>

@@ -155,8 +155,6 @@ const resWrong   = document.getElementById('res-wrong');
 const resTotal   = document.getElementById('res-total');
 const pctFill    = document.getElementById('pct-fill');
 const pctText    = document.getElementById('pct-text');
-const shareUrl   = document.getElementById('share-url');
-const copyBtn    = document.getElementById('copy-btn');
 const btnStart   = document.getElementById('btn-start');
 const btnAgain   = document.getElementById('btn-again');
 
@@ -300,24 +298,48 @@ function endGame(allDone = false) {
       : 'Игра окончена!';
   }
 
-  // ── Шаринг через URL-параметры (работает между устройствами) ──
-  // Формат: result.html#c=12&w=3&t=15&d=2026-04-22+20:03
-  const now = new Date().toISOString().slice(0, 16).replace('T', '+');
-  const hash = `c=${correct}&w=${wrong}&t=${total}&d=${encodeURIComponent(now)}`;
-  const base = location.href.replace(/\/[^/]*$/, '/');
-  shareUrl.value = base + 'result.html#' + hash;
-}
+  // ── Сохранение результата в localStorage ──────────────────────
+  const RECORD_KEY = 'v1_record';
+  const date = new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
 
-// ── Copy button ───────────────────────────────────────────────────
-copyBtn?.addEventListener('click', () => {
-  const val = shareUrl.value;
-  if (!val || val === '—') return;
-  navigator.clipboard.writeText(val).catch(() => {
-    shareUrl.select(); document.execCommand('copy');
-  });
-  copyBtn.classList.add('copied');
-  setTimeout(() => copyBtn.classList.remove('copied'), 1500);
-});
+  // Всегда сохраняем последний результат (для result.html)
+  localStorage.setItem('v1_last', JSON.stringify({ correct, wrong, total, pct, date }));
+
+  // Обновляем рекорд если побит
+  const saved = JSON.parse(localStorage.getItem(RECORD_KEY) || 'null');
+  const isNewRecord = !saved || correct > saved.correct;
+  if (isNewRecord) {
+    localStorage.setItem(RECORD_KEY, JSON.stringify({ correct, wrong, total, pct, date }));
+  }
+
+  // Показываем / скрываем баннер нового рекорда
+  const banner = document.getElementById('new-record-banner');
+  if (banner) banner.style.display = isNewRecord ? 'flex' : 'none';
+
+  // ── Кнопка «Скопировать результат» ──────────────────────────────
+  const shareBtn  = document.getElementById('share-text-btn');
+  const shareHint = document.getElementById('share-copied-hint');
+  if (shareBtn) {
+    // Переназначаем листенер при каждом конце игры, чтобы цифры были актуальны
+    const freshBtn = shareBtn.cloneNode(true);
+    shareBtn.replaceWith(freshBtn);
+    freshBtn.addEventListener('click', () => {
+      const text =
+        `🌍 Флаги Мира — результат игры\n` +
+        `✅ Угадано: ${correct} из ${total}\n` +
+        `❌ Ошибок: ${wrong}\n` +
+        `📊 Точность: ${pct}% правильных\n` +
+        `👉 Сыграй сам: https://ithemaybe.github.io/game/`;
+      navigator.clipboard.writeText(text).then(() => {
+        const hint = document.getElementById('share-copied-hint');
+        if (hint) {
+          hint.textContent = '✓ Скопировано!';
+          setTimeout(() => { hint.textContent = ''; }, 2000);
+        }
+      });
+    });
+  }
+}
 
 // ── Game start ────────────────────────────────────────────────────
 function startGame() {
