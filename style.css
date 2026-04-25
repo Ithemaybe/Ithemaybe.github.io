@@ -352,7 +352,46 @@ html, body {
   .options-grid { grid-template-columns: 1fr; }
 }
 
-/* ── hCaptcha wrapper ── */
+/* ── V2 mode button (top-right of start screen) ── */
+.btn-v2-mode {
+  position: absolute;
+  top: 1.25rem; right: 1.25rem;
+  display: inline-flex; align-items: center; gap: .35rem;
+  text-decoration: none;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 100px;
+  padding: .4rem .85rem .4rem .5rem;
+  color: var(--text);
+  font-size: .78rem;
+  transition: var(--transition);
+  z-index: 10;
+}
+.btn-v2-mode:hover {
+  border-color: var(--accent2);
+  background: rgba(167,139,250,.08);
+  color: var(--accent2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(167,139,250,.2);
+}
+.btn-v2-badge {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  font-family: 'Unbounded', sans-serif;
+  font-size: .65rem; font-weight: 700;
+  padding: .15rem .45rem;
+  border-radius: 100px;
+  letter-spacing: .05em;
+}
+.btn-v2-label {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 600; font-size: .72rem;
+  letter-spacing: .03em;
+}
+.btn-v2-arrow { font-size: .8rem; opacity: .6; }
+
+/* Make start screen wrapper relative so absolute button works */
+#start-screen { position: relative; }
 .captcha-wrap {
   display: flex;
   justify-content: center;
